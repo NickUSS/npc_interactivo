@@ -155,6 +155,10 @@ function deleteNPC(id) {
         body: JSON.stringify({
             id: parseInt(id)
         })
+    }).then(() => {
+        // Eliminar el elemento de la UI inmediatamente
+        delete npcs[id];
+        updateNPCList();
     });
 }
 

@@ -102,23 +102,21 @@ function SpawnNPC(id, data)
     RequestModel(hash)
     while not HasModelLoaded(hash) do Wait(1) end
 
-    -- Obtener la altura del suelo
+    -- Ajustar altura
     local x, y, z = data.coords.x, data.coords.y, data.coords.z
-    local ground, groundZ = GetGroundZFor_3dCoord(x, y, z, false)
-    local finalZ = ground and groundZ or z
+    local ground, groundZ = GetGroundZFor_3dCoord(x, y, z + 1.0, false)
+    local finalZ = ground and groundZ + 1.0 or z + 1.0
 
     local ped = CreatePed(4, hash, x, y, finalZ, data.coords.w, false, true)
     SetEntityHeading(ped, data.coords.w)
     FreezeEntityPosition(ped, true)
     SetEntityInvincible(ped, true)
     SetBlockingOfNonTemporaryEvents(ped, true)
-    PlaceObjectOnGroundProperly(ped)
 
     if data.scenario then
         TaskStartScenarioInPlace(ped, data.scenario, 0, true)
     end
 
-    -- Crear una versión limpia para la UI
     npcs[id] = {
         name = data.name,
         model = data.model,
@@ -196,19 +194,23 @@ end)
 
 RegisterNetEvent('npc:removeNPC')
 AddEventHandler('npc:removeNPC', function(id)
-    if npcs[id] and npcs[id].entity then
-        DeleteEntity(npcs[id].entity)
+    if npcs[id] then
+        if npcs[id].entity then
+            DeleteEntity(npcs[id].entity)
+        end
         npcs[id] = nil
         
         -- Preparar datos para la UI
         local uiData = {}
         for npcId, npcData in pairs(npcs) do
-            uiData[npcId] = {
-                name = npcData.name,
-                model = npcData.model,
-                scenario = npcData.scenario,
-                coords = npcData.coords
-            }
+            if npcData then
+                uiData[npcId] = {
+                    name = npcData.name,
+                    model = npcData.model,
+                    scenario = npcData.scenario,
+                    coords = npcData.coords
+                }
+            end
         end
 
         SendNUIMessage({
