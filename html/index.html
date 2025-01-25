@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>NPC Manager</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div id="npc-manager" style="display: none;">
+        <div class="container">
+            <div class="header">
+                <h1>Gestión de NPCs</h1>
+                <span class="close-btn" id="closeMenu">&times;</span>
+            </div>
+            
+            <!-- Menú Principal -->
+            <div class="main-menu" id="mainMenu">
+                <button class="menu-btn" id="createNPC">
+                    <i class="fas fa-user-plus"></i> Crear Nuevo NPC
+                </button>
+                <button class="menu-btn" id="listNPCs">
+                    <i class="fas fa-list"></i> Lista de NPCs
+                </button>
+            </div>
+
+            <!-- Menú de Creación -->
+            <div class="create-menu" id="createMenu" style="display: none;">
+                <h2>Crear NPC</h2>
+                <select id="npcModel" class="input-field">
+                    <option value="a_m_m_business_01">Hombre de Negocios</option>
+                    <option value="a_f_m_business_02">Mujer de Negocios</option>
+                    <option value="s_m_y_cop_01">Policía</option>
+                    <option value="s_m_m_doctor_01">Médico</option>
+                    <option value="s_m_y_shop_01">Vendedor</option>
+                </select>
+
+                <select id="npcScenario" class="input-field">
+                    <option value="WORLD_HUMAN_STAND_IMPATIENT">Parado Impaciente</option>
+                    <option value="WORLD_HUMAN_SMOKING">Fumando</option>
+                    <option value="WORLD_HUMAN_LEANING">Apoyado en Pared</option>
+                    <option value="WORLD_HUMAN_DRINKING">Tomando Café</option>
+                    <option value="WORLD_HUMAN_STAND_MOBILE">Usando Teléfono</option>
+                </select>
+
+                <input type="text" id="npcName" class="input-field" placeholder="Nombre del NPC">
+                
+                <button class="confirm-btn" id="confirmCreate">
+                    <i class="fas fa-check"></i> Crear NPC
+                </button>
+                <button class="back-btn" id="backFromCreate">
+                    <i class="fas fa-arrow-left"></i> Volver
+                </button>
+            </div>
+
+            <!-- Menú de Lista -->
+            <div class="list-menu" id="listMenu" style="display: none;">
+                <h2>NPCs Existentes</h2>
+                <div id="npcList" class="npc-list"></div>
+                <button class="back-btn" id="backFromList">
+                    <i class="fas fa-arrow-left"></i> Volver
+                </button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
